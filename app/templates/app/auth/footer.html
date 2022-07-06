@@ -54,12 +54,25 @@
         </div>
     </div>
     <div class="footer-top">
+    <div class="position-relative mt-4" style="color : RED">
+            <p>
+                {#                        {% if messages %}#}
+                {#                            {% for message in messages %}#}
+                {#                                <p>{{ message }}</p>#}
+                {#                            {% endfor %}#}
+                {#                        {% endif %}#}
+                {% if form.errors %}
+                    <p>{{ form.errors }}</p>
+                {% endif %}
+            </p>
+        </div>
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-7">
                     <div class="block-subscribe">
                         <div class="newsletter">
-                            <form>
+                            <form method="post" action="{% url 'blog_user' %}">
+                                {% csrf_token %}
                                 <h4>newsletter</h4>
                                 <input type="text" placeholder="Enter your email address"
                                        class="input-text required-entry validate-email"
@@ -141,7 +154,7 @@
                         <i class="add-icon">&nbsp;</i>63/7 Aviasozlar , Yashnobod, <br>
                         &nbsp;Tashkent , Uzbekistan
                     </address>
-                    <div class="phone-footer"><i class="phone-icon">&nbsp;</i>+ 9989 93 073 23 08 </div>
+                    <div class="phone-footer"><i class="phone-icon">&nbsp;</i>+ 9989 93 073 23 08</div>
                     <div class="email-footer"><i class="email-icon">&nbsp;</i> <a
                             href="#">mavcompany.uz@gmailcom</a></div>
                 </div>

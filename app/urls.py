@@ -2,7 +2,8 @@ from django.urls import path
 
 from app.views import IndexPage, LoginPage, LogoutPage, ProductPage, ProductDetailPage, QuickViewPage, AllProductPage, \
     RegisterPage, FaqPage, ComparePage, AddressPage, ContactUsPage, AboutUsPage, ForgotPasswordPage, MyWishesPage, \
-    DashboardPage, ShoppingCardsPage, CheckOutPage, BlogPage, ProductList, BlogDetailsPage, Product_Detail_Page
+    DashboardPage, ShoppingCardsPage, CheckOutPage, BlogPage, ProductList, BlogDetailsPage, Product_Detail_Page, \
+    BlogUserPage
 from root import settings
 
 urlpatterns = [
@@ -33,6 +34,7 @@ urlpatterns = [
     # blog
     path('polo-blog/', BlogPage.as_view(), name='blog_page'),
     path('blog-details/', BlogDetailsPage.as_view(), name='blog_details_page'),
+    path('footer/', BlogUserPage.as_view(), name='blog_user'),
 
     # user urls
     path('my-wishes/', MyWishesPage.as_view(), name='my_wishlist_page'),

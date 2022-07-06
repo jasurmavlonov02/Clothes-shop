@@ -86,3 +86,9 @@ class BlogCategory(MPTTModel):
 
     def __str__(self):
         return self.name
+
+class BlogUser(BaseModel):
+    email = EmailField()
+
+    def __str__(self):
+        return self.email

@@ -24,12 +24,12 @@
                         </div>
                     </div>
                     <div class="position-relative mt-4" style="color : RED">
-{#                        <p>#}
-{#                            {% if messages %}#}
-{#                                {% for message in messages %}#}
-{#                                    <p>{{ message }}</p>#}
-{#                                {% endfor %}#}
-{#                            {% endif %}#}
+                        <p>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <p>{{ message }}</p>
+                                {% endfor %}
+                            {% endif %}
 
                         {% if form.errors %}
                             <p>{{ form.errors }}</p>

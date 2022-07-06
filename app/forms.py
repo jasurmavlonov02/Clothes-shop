@@ -8,9 +8,10 @@ from django.forms import Form, EmailField, CharField
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
-from app.models import User
+
+from app.models import User, BlogUser
 from app.tokens import account_activation_token
-from root.settings import EMAIL_HOST, EMAIL_HOST_USER
+from root.settings import EMAIL_HOST_USER
 
 
 class LoginForm(AuthenticationForm):
@@ -19,14 +20,14 @@ class LoginForm(AuthenticationForm):
     password = CharField(max_length=255)
 
     def clean_email(self):
-        email = self.data.get('email')
+        email = self.cleaned_data.get('email')
         if not User.objects.filter(email=email).exists():
             raise ValidationError('This email is not exists ')
         return email
 
     def clean_password(self):
-        email = self.data.get('email')
-        password = self.data.get('password')
+        email = self.cleaned_data.get('email')
+        password = self.cleaned_data.get('password')
 
         user = User.objects.filter(email=email).first()
         if user and not user.check_password(password):
@@ -77,7 +78,7 @@ class RegisterForm(Form):
     def save(self):
         user = User.objects.create_user(
             username=self.cleaned_data.get('username'),
-            email=self.cleaned_data.get('email')
+            email=self.cleaned_data.get('email'),
         )
         user.set_password(self.cleaned_data.get('password'))
         user.save()
@@ -91,6 +92,8 @@ class ForgotPasswordForm(Form):
         if not User.objects.filter(email=email).exists():
             raise ValidationError('This email is not registered ')
         return email
+
+    # result = send_mail(subject, message, from_email, recipient_list)
 
 
 def send_email(email, request, _type):
@@ -109,3 +112,33 @@ def send_email(email, request, _type):
 
     result = send_mail(subject, message, from_email, recipient_list)
     print('Send to MAIL')
+
+
+class PersonalInfoForm(Form):
+    email = EmailField()
+
+
+class BlogUserForm(Form):
+    email = EmailField()
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if not User.objects.filter(email=email).exists():
+            raise ValidationError('This email is not exists in the databases ')
+
+        elif BlogUser.objects.filter(email=email).exists():
+            raise ValidationError('This email already saved ')
+        return email
+
+
+
+
+    def save(self):
+        blog_user = BlogUser(
+            email = self.cleaned_data.get('email')
+        )
+        blog_user.save()
+
+
+
+

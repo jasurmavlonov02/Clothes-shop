@@ -1,10 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.views import LogoutView, LoginView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
-from app.forms import RegisterForm, ForgotPasswordForm, send_email
-from app.models import Product, Category, Blog
+from app.forms import RegisterForm, ForgotPasswordForm, send_email, BlogUserForm
+from app.models import Product, Category, Blog, BlogUser
 
 from app.forms import RegisterForm, LoginForm
 from app.models import Product
@@ -29,6 +29,14 @@ class LogoutPage(LogoutView):
     template_name = 'app/logout-page.html'
 
 
+class LoginMixin:
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('index')
+        return super().get(request, *args, **kwargs)
+
+
+
 class ForgotPasswordPage(FormView):
     form_class = ForgotPasswordForm
     success_url = reverse_lazy('index')
@@ -40,12 +48,13 @@ class ForgotPasswordPage(FormView):
 
 
 class LoginPage(LoginView):
-    form_class = LoginForm
     template_name = 'app/main/login-page.html'
+    form_class = LoginForm
     success_url = reverse_lazy('index')
 
     def form_valid(self, form):
         return super().form_valid(form)
+
 
 
 class IndexPage(TemplateView):
@@ -128,6 +137,16 @@ class DashboardPage(TemplateView):
 
 class ShoppingCardsPage(TemplateView):
     template_name = 'app/products/shopping-cart-page.html'
+
+
+class BlogUserPage(FormView):
+    form_class = BlogUserForm
+    template_name = 'app/auth/footer.html'
+    success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
 
 class BlogPage(TemplateView):

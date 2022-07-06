@@ -59,6 +59,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
 
+
 ]
 
 ROOT_URLCONF = 'root.urls'
@@ -89,7 +90,7 @@ AUTH_USER_MODEL = 'app.User'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite',
+        'NAME': BASE_DIR / 'db.sqlite3',
         # 'USER': 'postgres',
         # 'PASSWORD': 'jasur24',
         # 'HOST': 'localhost',
@@ -144,7 +145,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'asadbekmirtazayev0@gmail.com'
+EMAIL_HOST_USER = 'jasurmavlonov24@gmail.com'
 EMAIL_HOST_PASSWORD = 'hxcxlwmccxwikacc'  # app password
 EMAIL_USE_TLS = True
 
